@@ -1,0 +1,23 @@
+.wrapper{
+    width: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    border: 1px solid gray;
+}
+
+.group{
+    border: 1px solid gray;
+    width: 100%;
+}
+
+.element{
+    border: 1px solid gray;
+    background-color: lightcyan;
+    color: black;
+}

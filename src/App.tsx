@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from './DragAndDropStrict'
+import './App.css'
+
+// TODO: Fix bug with insertion of single product in group
 
 const DATA = [
   {
@@ -51,17 +54,17 @@ function App() {
     )
       return;
 
-    if (type === "group") {
-      const reorderedStores = [...stores];
-
-      const storeSourceIndex = source.index;
-      const storeDestinatonIndex = destination.index;
-
-      const [removedStore] = reorderedStores.splice(storeSourceIndex, 1);
-      reorderedStores.splice(storeDestinatonIndex, 0, removedStore);
-
-      return setStores(reorderedStores);
-    }
+      if (type === "group") {
+        const reorderedStores = [...stores];
+  
+        const storeSourceIndex = source.index;
+        const storeDestinatonIndex = destination.index;
+  
+        const [removedStore] = reorderedStores.splice(storeSourceIndex, 1);
+        reorderedStores.splice(storeDestinatonIndex, 0, removedStore);
+  
+        return setStores(reorderedStores);
+      }
     const itemSourceIndex = source.index;
     const itemDestinationIndex = destination.index;
 
@@ -96,22 +99,26 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <DragDropContext onDragEnd={handleDragAndDrop}>
 
-        <div>
+        <div className="title">
           <h1>Shopping List</h1>
         </div>
 
         <Droppable droppableId='ROOT' type="group">
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <div 
+            {...provided.droppableProps} 
+              ref={provided.innerRef}
+              >
 
               {stores.map((store, index) => (
 
                 <Draggable draggableId={store.id} key={store.id} index={index}>
                   {(provided) => (
                     <div
+                      className="group"    
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                       ref={provided.innerRef}
@@ -144,15 +151,18 @@ function StoreList({ name, items, id }: Props) {
   return (
     <Droppable droppableId={id}>
       {(provided) => (
-        <div>
-          <div {...provided.droppableProps} ref={provided.innerRef}>
+        <div{...provided.droppableProps} ref={provided.innerRef}>
+          
+          <div >
             <h3>{name}</h3>
           </div>
+          
           <div>
             {items.map((item: any, index: number) => (
               <Draggable draggableId={item.id} index={index} key={item.id}>
                 {(provided) => (
                   <div 
+                    className="element"
                     {...provided.dragHandleProps} 
                     {...provided.draggableProps} 
                     ref = {provided.innerRef}
