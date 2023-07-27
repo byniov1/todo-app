@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
-import {StrictModeDroppable as Droppable} from './DragAndDropStrict'
+import { StrictModeDroppable as Droppable } from './DragAndDropStrict'
 
 const DATA = [
   {
@@ -39,13 +39,30 @@ const DATA = [
 function App() {
 
   const [stores, setStores] = useState(DATA);
+  
+  const handleDragDrop = (result: any) => {
+    const {source, destination, type} = result
 
+    if(!destination) return;
+    
+    if(source.droppableId === destination.droppableId && source.index === destination.index) return 
+
+    if(type === 'group'){
+      const reorderedStores = [...stores];
+      
+      const sourceIndex = source.index
+      const desinationIndex = destination.index;
+
+      const [removedStore] = reorderedStores.splice(sourceIndex, 1)
+      reorderedStores.splice(desinationIndex, 0 , removedStore);
+
+      return setStores(reorderedStores)
+    }
+  }
 
   return (
     <div>
-      <DragDropContext onDragEnd={() => {
-        console.log('Drag drop events occured')
-      }}>
+      <DragDropContext onDragEnd={handleDragDrop}>
 
         <div>
           <h1>Shopping List</h1>
@@ -71,6 +88,7 @@ function App() {
 
               ))}
 
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
