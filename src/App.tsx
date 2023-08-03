@@ -42,6 +42,7 @@ const DATA = [
 function App() {
 
   const [stores, setStores] = useState(DATA);
+  const [todo, setTodo] = useState('')
 
   const handleDragAndDrop = (results: any) => {
     const { source, destination } = results;
@@ -84,17 +85,34 @@ function App() {
     setStores(newStores);
   };
 
+  const handleChange = (e: any) => {
+    setTodo(prevState => prevState = e.target.value)
+  }
+
+  const handleAdd = () => {
+    console.log(todo)
+    const newStores = [...stores]
+    console.log(newStores[0].items.push({id: '312fdsf', name: todo}))
+    setStores(prevStores => prevStores = newStores)
+  }
+
   return (
     <div className="wrapper">
       <DragDropContext onDragEnd={handleDragAndDrop}>
           <div className="insertWrapper">
-            <input className="insert" type="text" placeholder="new task"/>
+            <input 
+              className="insert" 
+              type="text" 
+              placeholder="new task"
+              value={todo}
+              onChange={(e) => handleChange(e)}
+              />
+              <button onClick={handleAdd}>Add</button>
           </div>
 
         <div className="GroupWrapper">
           {stores.map((store, index) => (
             <div className="group" key={index}>
-              {/* <h3>{store.name}</h3> */}
               <StoreList name={store.name} items={store.items} id={store.id}  />
             </div>
           ))}
