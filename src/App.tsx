@@ -44,24 +44,12 @@ function App() {
   const [stores, setStores] = useState(DATA);
 
   const handleDragAndDrop = (results: any) => {
-    const { source, destination, type } = results;
+    const { source, destination } = results;
 
     if (!destination) return;
 
     if ( source.droppableId === destination.droppableId && source.index === destination.index)
       return;
-
-    if (type === "group") {
-      const reorderedStores = [...stores];
-
-      const storeSourceIndex = source.index;
-      const storeDestinatonIndex = destination.index;
-
-      const [removedStore] = reorderedStores.splice(storeSourceIndex, 1);
-      reorderedStores.splice(storeDestinatonIndex, 0, removedStore);
-
-      return setStores(reorderedStores);
-    }
 
     const itemSourceIndex = source.index;
     const itemDestinationIndex = destination.index;
