@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from './DragAndDropStrict'
+import { v4 as uuid } from 'uuid';
 import './App.css'
 
 // TODO: Fix bug with insertion of single product in group
@@ -92,7 +93,7 @@ function App() {
   const handleAdd = () => {
     console.log(todo)
     const newStores = [...stores]
-    console.log(newStores[0].items.push({id: '312fdsf', name: todo}))
+    console.log(newStores[0].items.push({id: uuid(), name: todo}))
     setStores(prevStores => prevStores = newStores)
   }
 
