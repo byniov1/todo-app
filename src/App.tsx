@@ -43,15 +43,12 @@ function App() {
 
   const [stores, setStores] = useState(DATA);
 
-  const handleDragAndDrop = (results) => {
+  const handleDragAndDrop = (results: any) => {
     const { source, destination, type } = results;
 
     if (!destination) return;
 
-    if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
-    )
+    if ( source.droppableId === destination.droppableId && source.index === destination.index)
       return;
 
     if (type === "group") {
@@ -65,6 +62,7 @@ function App() {
 
       return setStores(reorderedStores);
     }
+
     const itemSourceIndex = source.index;
     const itemDestinationIndex = destination.index;
 
@@ -102,14 +100,14 @@ function App() {
     <div className="wrapper">
       <DragDropContext onDragEnd={handleDragAndDrop}>
           <div className="insertWrapper">
-            <input className="insert" type="text" />
+            <input className="insert" type="text" placeholder="new task"/>
           </div>
 
         <div className="GroupWrapper">
           {stores.map((store, index) => (
             <div className="group" key={index}>
               {/* <h3>{store.name}</h3> */}
-              <StoreList {...store} />
+              <StoreList name={store.name} items={store.items} id={store.id}  />
             </div>
           ))}
           </div>
@@ -121,7 +119,10 @@ function App() {
 
 interface Props {
   name: string,
-  items: string[],
+  items: {
+    id: string;
+    name: string;
+}[],
   id: string
 }
 
