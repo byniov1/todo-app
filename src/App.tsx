@@ -101,15 +101,18 @@ function App() {
   return (
     <div className="wrapper">
       <DragDropContext onDragEnd={handleDragAndDrop}>
-        
-        <div >
+          <div className="insertWrapper">
+            <input className="insert" type="text" />
+          </div>
+
+        <div className="GroupWrapper">
           {stores.map((store, index) => (
             <div className="group" key={index}>
               {/* <h3>{store.name}</h3> */}
               <StoreList {...store} />
             </div>
           ))}
-        </div>
+          </div>
       
       </DragDropContext>
     </div>
