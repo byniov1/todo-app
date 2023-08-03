@@ -54,17 +54,17 @@ function App() {
     )
       return;
 
-      if (type === "group") {
-        const reorderedStores = [...stores];
-  
-        const storeSourceIndex = source.index;
-        const storeDestinatonIndex = destination.index;
-  
-        const [removedStore] = reorderedStores.splice(storeSourceIndex, 1);
-        reorderedStores.splice(storeDestinatonIndex, 0, removedStore);
-  
-        return setStores(reorderedStores);
-      }
+    if (type === "group") {
+      const reorderedStores = [...stores];
+
+      const storeSourceIndex = source.index;
+      const storeDestinatonIndex = destination.index;
+
+      const [removedStore] = reorderedStores.splice(storeSourceIndex, 1);
+      reorderedStores.splice(storeDestinatonIndex, 0, removedStore);
+
+      return setStores(reorderedStores);
+    }
     const itemSourceIndex = source.index;
     const itemDestinationIndex = destination.index;
 
@@ -101,41 +101,16 @@ function App() {
   return (
     <div className="wrapper">
       <DragDropContext onDragEnd={handleDragAndDrop}>
-
-        <div className="title">
-          <h1>Shopping List</h1>
-        </div>
-
-        <Droppable droppableId='ROOT' type="group">
-          {(provided) => (
-            <div 
-            {...provided.droppableProps} 
-              ref={provided.innerRef}
-              >
-
-              {stores.map((store, index) => (
-
-                <Draggable draggableId={store.id} key={store.id} index={index}>
-                  {(provided) => (
-                    <div
-                      className="group"    
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
-                      ref={provided.innerRef}
-                    >
-                      {/* <h3>{store.name}</h3> */}
-                      <StoreList {...store} />
-                    </div>
-                  )}
-                </Draggable>
-
-              ))}
-
-              {provided.placeholder}
+        
+        <div >
+          {stores.map((store, index) => (
+            <div className="group" key={index}>
+              {/* <h3>{store.name}</h3> */}
+              <StoreList {...store} />
             </div>
-          )}
-        </Droppable>
-
+          ))}
+        </div>
+      
       </DragDropContext>
     </div>
   )
@@ -152,20 +127,20 @@ function StoreList({ name, items, id }: Props) {
     <Droppable droppableId={id}>
       {(provided) => (
         <div{...provided.droppableProps} ref={provided.innerRef}>
-          
+
           <div >
             <h3>{name}</h3>
           </div>
-          
+
           <div>
             {items.map((item: any, index: number) => (
               <Draggable draggableId={item.id} index={index} key={item.id}>
                 {(provided) => (
-                  <div 
+                  <div
                     className="element"
-                    {...provided.dragHandleProps} 
-                    {...provided.draggableProps} 
-                    ref = {provided.innerRef}
+                    {...provided.dragHandleProps}
+                    {...provided.draggableProps}
+                    ref={provided.innerRef}
                   >
                     <h4>{item.name}</h4>
                   </div>
